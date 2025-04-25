@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Document
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0 rounded-4 p-4">
+        <h2 class="mb-4 text-primary">📄 Document Upload</h2>
+
+        <form asp-action="DocsUploading" asp-controller="Clients" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label for="file" class="form-label">Choose a file (PDF or Image):</label>
+                <input type="file" id="file" name="file" accept=".pdf, image/*" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info mt-4" role="alert">
+                <strong>@ViewBag.Message</strong>
+            </div>
+        }
+
+        @if (ViewBag.ExtractedText != null)
+        {
+            <div class="mt-5">
+                <h4 class="text-success">📑 Extracted Text:</h4>
+                <div class="bg-light border rounded p-3" style="white-space: pre-wrap; font-family: monospace;">
+                    @ViewBag.ExtractedText
+                </div>
+            </div>
+        }
+    </div>
+</div>

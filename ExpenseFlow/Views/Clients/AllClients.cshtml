@@ -1,0 +1,25 @@
+﻿@model List<Client>
+
+<h2>All Clients</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.FirstName</td>
+                <td>@client.LastName</td>
+                <td>@client.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Clients" asp-action="Register" class="btn btn-secondary">Back to Home</a>

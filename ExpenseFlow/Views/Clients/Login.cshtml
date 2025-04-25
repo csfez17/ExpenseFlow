@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model LoginViewModel
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-sm p-4" style="min-width: 350px; max-width: 450px; width: 100%;">
+        <h2 class="text-center mb-4">Login</h2>
+
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <form asp-action="Login" asp-controller="Clients" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <p class="mb-0">
+                Don't have an account?
+                <a asp-controller="Clients" asp-action="Register" class="text-decoration-none">Register here</a>
+            </p>
+        </div>
+    </div>
+</div>
+

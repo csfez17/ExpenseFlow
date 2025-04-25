@@ -1,0 +1,87 @@
+﻿@* @*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Expense>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Your Expenses</h2>
+
+    <form method="get" asp-action="FilterExpenses" asp-controller="Clients" class="mb-4 p-4 border rounded shadow-sm bg-light">
+        <div class="row mb-3">
+            <div class="col-md-4 mb-2 mb-md-0">
+                <input type="text" name="companyName" class="form-control" placeholder="Company Name" />
+            </div>
+            <div class="col-md-4 mb-2 mb-md-0">
+                <input type="number" name="amountMin" class="form-control" step="0.01" placeholder="Min Amount" />
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="amountMax" class="form-control" step="0.01" placeholder="Max Amount" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4 mb-2 mb-md-0">
+                <input type="date" name="startDate" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-2 mb-md-0">
+                <input type="date" name="endDate" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    @foreach (var category in Enum.GetValues(typeof(ExpenseFlow.Models.Expense.ExpenseCategory)))
+                    {
+                        <option value="@((int)category)">@category</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary me-2">Filter</button>
+            <a asp-action="AllExpenses" asp-controller="Clients" class="btn btn-outline-secondary">Reset Filters</a>
+        </div>
+    </form>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Company Name</th>
+                <th>Transaction Time</th>
+                <th>Amount Before VAT</th>
+                <th>Amount After VAT</th>
+                <th>Invoice Number</th>
+                <th>Category</th>
+                <th>Update Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model)
+            {
+                <tr>
+                    <td>@expense.CompanyName</td>
+                    <td>@expense.TransactionTime.ToShortDateString()</td>
+                    <td>@expense.AmountBeforeVAT.ToString("C")</td>
+                    <td>@expense.AmountAfterVAT.ToString("C")</td>
+                    <td>@expense.InvoiceNumber</td>
+                    <td>@expense.Category</td>
+                    <td>
+                        <form asp-action="UpdateExpenseCategory" asp-controller="Clients" method="post" class="d-flex align-items-center">
+                            <input type="hidden" name="id" value="@expense.Id" />
+                            <select name="category" class="form-select me-2">
+                                @foreach (var category in Enum.GetValues(typeof(ExpenseFlow.Models.Expense.ExpenseCategory)))
+                                {
+                                    <option value="@((int)category)">@category</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-success">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
